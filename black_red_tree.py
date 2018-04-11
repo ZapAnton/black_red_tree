@@ -15,7 +15,7 @@ class BlackRedTree:
     def __init__(self):
         print('Creating black-red tree!')
 
-        self.root = self.NODE_TYPE.BLACK
+        self.root = BlackRedTree.TreeNode(BlackRedTree.NODE_TYPE.BLACK)
 
 
 tree = BlackRedTree()
