@@ -11,9 +11,9 @@ class TreeNode:
 
         self.node_type = node_type
 
-        self.left_child = TreeNode(NODE_TYPE.BLACK)
+        self.left_child = None
 
-        self.right_child = TreeNode(NODE_TYPE.BLACK)
+        self.right_child = None
 
 
 class BlackRedTree:
@@ -21,9 +21,44 @@ class BlackRedTree:
     def __init__(self):
         print('Creating black-red tree!')
 
-        self.root = TreeNode(NODE_TYPE.BLACK)
+        self.root = None
+
+    def __insert_item(self, item: int, node: TreeNode) -> TreeNode:
+        if node is None:
+            node = TreeNode(item, NODE_TYPE.BLACK)
+        elif item < node.item:
+            node.left_child = self.__insert_item(item, node.left_child)
+        elif item > node.item:
+            node.right_child = self.__insert_item(item, node.right_child)
+
+        return node
+
+    def insert(self, item: int):
+        self.root = self.__insert_item(item, self.root)
+
+    def print_tree(node: TreeNode):
+        if node is not None:
+            BlackRedTree.print_tree(node.left_child)
+
+            print(node.item)
+
+            BlackRedTree.print_tree(node.right_child)
 
 
 tree = BlackRedTree()
 
-print(tree.root)
+tree.insert(50)
+
+tree.insert(30)
+
+tree.insert(20)
+
+tree.insert(40)
+
+tree.insert(70)
+
+tree.insert(60)
+
+tree.insert(80)
+
+BlackRedTree.print_tree(tree.root)
