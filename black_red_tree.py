@@ -6,8 +6,8 @@ NODE_TYPE = Enum('NODE_TYPE', 'BLACK RED')
 
 class TreeNode:
 
-    def __init__(self, node_type):
-        self.item = None
+    def __init__(self, item: int, node_type: NODE_TYPE):
+        self.item = item
 
         self.node_type = node_type
 
