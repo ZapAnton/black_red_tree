@@ -26,6 +26,12 @@ class TreeNode:
 
         return self.parent.parent.right_child
 
+    def __str__(self):
+        return 'Node item: {:>5} Node color: {:>15} Node parent: {:>5}'.format(
+                      self.item,
+                      self.node_type,
+                      'No parent' if self.parent is None else self.parent.item)
+
 
 class BlackRedTree:
 
@@ -60,12 +66,7 @@ class BlackRedTree:
         if node is not None:
             BlackRedTree.print_tree(node.left_child)
 
-            print('Node: {} Node color: {} Node parent: {}'
-                  .format(
-                      node.item,
-                      node.node_type,
-                      node.parent if node.parent is None else node.parent.item)
-                  )
+            print(node)
 
             BlackRedTree.print_tree(node.right_child)
 
