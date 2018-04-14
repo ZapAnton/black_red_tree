@@ -52,22 +52,23 @@ class BlackRedTree:
             BlackRedTree.print_tree(node.right_child)
 
 
-tree = BlackRedTree()
+if __name__ == '__main__':
+    tree = BlackRedTree()
 
-BlackRedTree.print_tree(tree.root)
+    BlackRedTree.print_tree(tree.root)
 
-tree.insert(50)
+    tree.insert(50)
 
-tree.insert(30)
+    tree.insert(30)
 
-tree.insert(20)
+    tree.insert(20)
 
-tree.insert(40)
+    tree.insert(40)
 
-tree.insert(70)
+    tree.insert(70)
 
-tree.insert(60)
+    tree.insert(60)
 
-tree.insert(80)
+    tree.insert(80)
 
-BlackRedTree.print_tree(tree.root)
+    BlackRedTree.print_tree(tree.root)
