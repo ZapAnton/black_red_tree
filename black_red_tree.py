@@ -24,7 +24,10 @@ class TreeNode:
         if self.parent.parent is None:
             return None
 
-        return self.parent.parent.right_child
+        if self.parent.parent.left_child == self.parent:
+            return self.parent.parent.right_child
+        else:
+            return self.parent.parent.left_child
 
     def is_root(self) -> bool:
         return self.parent is None
@@ -57,31 +60,100 @@ class BlackRedTree:
 
         return root
 
+    def __left_left_rotate(self, parent, grandparent):
+        grandparent.left_child = parent.right_child
+
+        parent.parent = grandparent.parent
+
+        grandparent.parent = parent
+
+        parent.right_child = grandparent
+
+        (grandparent.node_type, parent.node_type) = \
+            (parent.node_type, grandparent.node_type)
+
+        if self.root == grandparent:
+            self.root = parent
+
+    def __left_right_rotate(self, new_node, parent, grandparent):
+        parent.right_child = new_node.left_child
+
+        new_node.parent = grandparent
+
+        parent.parent = new_node
+
+        new_node.left_child = parent
+
+        if self.root == grandparent:
+            self.root = new_node
+
+        self.__left_left_rotate(new_node, grandparent)
+
+    def __right_right_rotate(self, parent, grandparent):
+        grandparent.right_child = parent.left_child
+
+        parent.parent = grandparent.parent
+
+        parent.left_child = grandparent
+
+        grandparent.parent = parent
+
+        (grandparent.node_type, parent.node_type) = \
+            (parent.node_type, grandparent.node_type)
+
+        if self.root == grandparent:
+            self.root = parent
+
+    def __right_left_rotate(self, new_node, parent, grandparent):
+        parent.left_child = new_node.right_child
+
+        new_node.parent = parent.parent
+
+        new_node.right_child = parent
+
+        parent.parent = new_node
+
+        if self.root == grandparent:
+            self.root = new_node
+
+        self.__right_right_rotate(new_node, grandparent)
+
     def rebalance_tree(self, new_node: TreeNode):
         if new_node.is_root():
             new_node.node_type = NODE_TYPE.BLACK
 
             return
 
-        elif new_node.parent.node_type == NODE_TYPE.BLACK:
+        parent = new_node.parent
 
+        uncle = new_node.get_uncle_node()
+
+        grandparent = new_node.parent.parent
+
+        if grandparent is None:
             return
 
-        new_node_uncle = new_node.get_uncle_node()
+        if uncle is None or uncle.node_type == NODE_TYPE.BLACK:
+            if (grandparent.left_child == parent) and \
+               (parent.left_child == new_node):
+                self.__left_left_rotate(parent, grandparent)
+            elif (grandparent.left_child == parent) and \
+                 (parent.right_child == new_node):
+                self.__left_right_rotate(new_node, parent, grandparent)
+            elif (grandparent.right_child == parent) and \
+                 (parent.right_child == new_node):
+                self.__right_right_rotate(parent, grandparent)
+            elif (grandparent.right_child == parent) and \
+                 (parent.left_child == new_node):
+                self.__right_left_rotate(new_node, parent, grandparent)
+        else:
+            uncle.node_type = NODE_TYPE.BLACK
 
-        new_node_grandparent = new_node.parent.parent
+            parent.node_type = NODE_TYPE.BLACK
 
-        if new_node_uncle is None:
-            return
+            grandparent.node_type = NODE_TYPE.RED
 
-        if new_node_uncle.node_type == NODE_TYPE.RED:
-            new_node_uncle.node_type = NODE_TYPE.BLACK
-
-            new_node.parent.node_type = NODE_TYPE.BLACK
-
-            new_node_grandparent.node_type = NODE_TYPE.RED
-
-            self.rebalance_tree(new_node_grandparent)
+            self.rebalance_tree(grandparent)
 
     def insert(self, item: int):
         new_node = TreeNode(item, NODE_TYPE.RED)
@@ -102,18 +174,24 @@ class BlackRedTree:
 if __name__ == '__main__':
     tree = BlackRedTree()
 
-    tree.insert(50)
-
-    tree.insert(30)
-
-    tree.insert(20)
+    tree.insert(5)
 
     tree.insert(40)
 
-    tree.insert(70)
+    tree.insert(10)
 
-    tree.insert(60)
+    tree.insert(8)
 
-    tree.insert(80)
+    tree.insert(13)
+
+    tree.insert(16)
+
+    tree.insert(25)
+
+    tree.insert(15)
+
+    tree.insert(1)
+
+    tree.insert(24)
 
     BlackRedTree.print_tree(tree.root)
