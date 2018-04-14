@@ -15,6 +15,17 @@ class TreeNode:
 
         self.right_child = None
 
+        self.parent = None
+
+    def get_uncle_node(self):
+        if self.parent is None:
+            return None
+
+        if self.parent.parent is None:
+            return None
+
+        return self.parent.parent.right_child
+
 
 class BlackRedTree:
 
