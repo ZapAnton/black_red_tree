@@ -39,8 +39,12 @@ class BlackRedTree:
             node = TreeNode(item, NODE_TYPE.RED)
         elif item < node.item:
             node.left_child = self.__insert_item(item, node.left_child)
+
+            node.left_child.parent = node
         elif item > node.item:
             node.right_child = self.__insert_item(item, node.right_child)
+
+            node.right_child.parent = node
 
         return node
 
@@ -52,21 +56,22 @@ class BlackRedTree:
 
             self.root.node_type = NODE_TYPE.BLACK
 
-            return
-
     def print_tree(node: TreeNode):
         if node is not None:
             BlackRedTree.print_tree(node.left_child)
 
-            print(node.item, '----', node.node_type)
+            print('Node: {} Node color: {} Node parent: {}'
+                  .format(
+                      node.item,
+                      node.node_type,
+                      node.parent if node.parent is None else node.parent.item)
+                  )
 
             BlackRedTree.print_tree(node.right_child)
 
 
 if __name__ == '__main__':
     tree = BlackRedTree()
-
-    BlackRedTree.print_tree(tree.root)
 
     tree.insert(50)
 
