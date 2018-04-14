@@ -43,27 +43,52 @@ class BlackRedTree:
 
         self.root = None
 
-    def __insert_item(self, item: int, node: TreeNode) -> TreeNode:
-        if node is None:
-            node = TreeNode(item, NODE_TYPE.RED)
-        elif item < node.item:
-            node.left_child = self.__insert_item(item, node.left_child)
+    def __insert_item(self, new_node: TreeNode, root: TreeNode) -> TreeNode:
+        if root is None:
+            return new_node
+        elif new_node.item < root.item:
+            root.left_child = self.__insert_item(new_node, root.left_child)
 
-            node.left_child.parent = node
-        elif item > node.item:
-            node.right_child = self.__insert_item(item, node.right_child)
+            root.left_child.parent = root
+        elif new_node.item > root.item:
+            root.right_child = self.__insert_item(new_node, root.right_child)
 
-            node.right_child.parent = node
+            root.right_child.parent = root
 
-        return node
+        return root
+
+    def rebalance_tree(self, new_node: TreeNode):
+        if new_node.is_root():
+            new_node.node_type = NODE_TYPE.BLACK
+
+            return
+
+        elif new_node.parent.node_type == NODE_TYPE.BLACK:
+
+            return
+
+        new_node_uncle = new_node.get_uncle_node()
+
+        new_node_grandparent = new_node.parent.parent
+
+        if new_node_uncle is None:
+            return
+
+        if new_node_uncle.node_type == NODE_TYPE.RED:
+            new_node_uncle.node_type = NODE_TYPE.BLACK
+
+            new_node.parent.node_type = NODE_TYPE.BLACK
+
+            new_node_grandparent.node_type = NODE_TYPE.RED
+
+            self.rebalance_tree(new_node_grandparent)
 
     def insert(self, item: int):
-        new_node = self.__insert_item(item, self.root)
+        new_node = TreeNode(item, NODE_TYPE.RED)
 
-        if self.root is None:
-            self.root = new_node
+        self.root = self.__insert_item(new_node, self.root)
 
-            self.root.node_type = NODE_TYPE.BLACK
+        self.rebalance_tree(new_node)
 
     def print_tree(node: TreeNode):
         if node is not None:
