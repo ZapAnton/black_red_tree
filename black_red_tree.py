@@ -26,6 +26,9 @@ class TreeNode:
 
         return self.parent.parent.right_child
 
+    def is_root(self) -> bool:
+        return self.parent is None
+
     def __str__(self):
         return 'Node item: {:>5} Node color: {:>15} Node parent: {:>5}'.format(
                       self.item,
