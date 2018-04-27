@@ -33,11 +33,8 @@ class TreeNode:
         return self.parent is None
 
     def __str__(self):
-        return 'Node item: {:>5}\
-                Node color: {:>15}\
-                Node parent: {:>5}\
-                Left child: {:>5}\
-                Right child: {:>5}'.format(
+        return 'Node item: {:>5} Node color: {:>15} Node parent: {:>5}\
+                Left child: {:>5} Right child: {:>5}'.format(
                     self.item,
                     self.node_type,
                     'No parent' if self.parent is None else self.parent.item,
@@ -70,7 +67,15 @@ class BlackRedTree:
     def __left_left_rotate(self, parent, grandparent):
         grandparent.left_child = parent.right_child
 
+        if parent.right_child is not None:
+            parent.right_child.parent = grandparent
+
         parent.parent = grandparent.parent
+
+        if grandparent.parent.right_child == grandparent:
+            grandparent.parent.right_child = parent
+        elif grandparent.parent.left_child == grandparent:
+            grandparent.parent.left_child = parent
 
         grandparent.parent = parent
 
