@@ -200,6 +200,20 @@ class BlackRedTree:
 
         self.rebalance_tree(new_node)
 
+    def __find(self, root: TreeNode, item: int) -> TreeNode:
+        if root is None:
+            return None
+
+        if item == root.item:
+            return root
+        elif item < root.item:
+            return self.__find(root.left_child, item)
+        elif item > root.item:
+            return self.__find(root.right_child, item)
+
+    def find(self, item: int) -> TreeNode:
+        return self.__find(self.root, item)
+
     def print_tree(node: TreeNode):
         if node is not None:
             BlackRedTree.print_tree(node.left_child)
@@ -215,4 +229,7 @@ if __name__ == '__main__':
     for item in range(1, 10):
         tree.insert(item)
 
-    BlackRedTree.print_tree(tree.root)
+    print(tree.find(5))
+    print(tree.find(1))
+    print(tree.find(10))
+    print(tree.find(8.4))
