@@ -118,8 +118,6 @@ class BlackRedTree:
 
         parent.parent = grandparent.parent
 
-        print('GRAND:', grandparent)
-
         if grandparent.parent is not None:
             if grandparent.parent.right_child == grandparent:
                 grandparent.parent.right_child = parent
