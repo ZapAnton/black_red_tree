@@ -33,10 +33,17 @@ class TreeNode:
         return self.parent is None
 
     def __str__(self):
-        return 'Node item: {:>5} Node color: {:>15} Node parent: {:>5}'.format(
-                      self.item,
-                      self.node_type,
-                      'No parent' if self.parent is None else self.parent.item)
+        return 'Node item: {:>5}\
+                Node color: {:>15}\
+                Node parent: {:>5}\
+                Left child: {:>5}\
+                Right child: {:>5}'.format(
+                    self.item,
+                    self.node_type,
+                    'No parent' if self.parent is None else self.parent.item,
+                    'na' if self.left_child is None else self.left_child.item,
+                    'na' if self.right_child is None else self.right_child.item
+                )
 
 
 class BlackRedTree:
@@ -78,7 +85,15 @@ class BlackRedTree:
     def __left_right_rotate(self, new_node, parent, grandparent):
         parent.right_child = new_node.left_child
 
+        if new_node.left_child is not None:
+            new_node.left_child.parent = parent
+
         new_node.parent = grandparent
+
+        if grandparent.left_child == parent:
+            grandparent.left_child = new_node
+        elif grandparent.right_child == parent:
+            grandparent.right_child = new_node
 
         parent.parent = new_node
 
@@ -174,24 +189,10 @@ class BlackRedTree:
 if __name__ == '__main__':
     tree = BlackRedTree()
 
-    tree.insert(5)
-
-    tree.insert(40)
-
-    tree.insert(10)
-
     tree.insert(8)
-
-    tree.insert(13)
-
-    tree.insert(16)
-
-    tree.insert(25)
-
+    tree.insert(18)
+    tree.insert(5)
     tree.insert(15)
-
-    tree.insert(1)
-
-    tree.insert(24)
+    tree.insert(17)
 
     BlackRedTree.print_tree(tree.root)
