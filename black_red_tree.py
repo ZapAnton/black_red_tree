@@ -237,6 +237,17 @@ class BlackRedTree:
 
         return node.item
 
+    def max(self) -> int:
+        if self.root is None:
+            return None
+
+        node = self.root
+
+        while node.right_child:
+            node = node.right_child
+
+        return node.item
+
     def print_tree(node: TreeNode):
         if node is not None:
             BlackRedTree.print_tree(node.left_child)
@@ -256,3 +267,5 @@ if __name__ == '__main__':
         print(item)
 
     print('Min:', tree.min())
+
+    print('Max:', tree.max())
