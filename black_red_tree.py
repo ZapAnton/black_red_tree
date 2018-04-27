@@ -226,6 +226,17 @@ class BlackRedTree:
     def find(self, item: int) -> TreeNode:
         return self.__find(self.root, item)
 
+    def min(self) -> int:
+        if self.root is None:
+            return None
+
+        node = self.root
+
+        while node.left_child:
+            node = node.left_child
+
+        return node.item
+
     def print_tree(node: TreeNode):
         if node is not None:
             BlackRedTree.print_tree(node.left_child)
@@ -238,8 +249,10 @@ class BlackRedTree:
 if __name__ == '__main__':
     tree = BlackRedTree()
 
-    for item in range(1, 10):
+    for item in range(-10, 10):
         tree.insert(item)
 
     for item in tree.inorder_items():
         print(item)
+
+    print('Min:', tree.min())
