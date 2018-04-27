@@ -112,7 +112,15 @@ class BlackRedTree:
     def __right_right_rotate(self, parent, grandparent):
         grandparent.right_child = parent.left_child
 
+        if parent.left_child is not None:
+            parent.left_child.parent = grandparent
+
         parent.parent = grandparent.parent
+
+        if grandparent.parent.right_child == grandparent:
+            grandparent.parent.right_child = parent
+        elif grandparent.parent.left_child == grandparent:
+            grandparent.parent.left_child = parent
 
         parent.left_child = grandparent
 
