@@ -72,10 +72,11 @@ class BlackRedTree:
 
         parent.parent = grandparent.parent
 
-        if grandparent.parent.right_child == grandparent:
-            grandparent.parent.right_child = parent
-        elif grandparent.parent.left_child == grandparent:
-            grandparent.parent.left_child = parent
+        if grandparent.parent is not None:
+            if grandparent.parent.right_child == grandparent:
+                grandparent.parent.right_child = parent
+            elif grandparent.parent.left_child == grandparent:
+                grandparent.parent.left_child = parent
 
         grandparent.parent = parent
 
@@ -117,10 +118,13 @@ class BlackRedTree:
 
         parent.parent = grandparent.parent
 
-        if grandparent.parent.right_child == grandparent:
-            grandparent.parent.right_child = parent
-        elif grandparent.parent.left_child == grandparent:
-            grandparent.parent.left_child = parent
+        print('GRAND:', grandparent)
+
+        if grandparent.parent is not None:
+            if grandparent.parent.right_child == grandparent:
+                grandparent.parent.right_child = parent
+            elif grandparent.parent.left_child == grandparent:
+                grandparent.parent.left_child = parent
 
         parent.left_child = grandparent
 
@@ -215,5 +219,8 @@ if __name__ == '__main__':
     tree.insert(5)
     tree.insert(15)
     tree.insert(17)
+    tree.insert(25)
+    tree.insert(40)
+    tree.insert(80)
 
     BlackRedTree.print_tree(tree.root)
