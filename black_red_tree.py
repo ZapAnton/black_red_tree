@@ -200,6 +200,18 @@ class BlackRedTree:
 
         self.rebalance_tree(new_node)
 
+    def __inorder_items(self, root) -> int:
+        if root.left_child is not None:
+            yield from self.__inorder_items(root.left_child)
+
+        yield root.item
+
+        if root.right_child is not None:
+            yield from self.__inorder_items(root.right_child)
+
+    def inorder_items(self):
+        yield from self.__inorder_items(self.root)
+
     def __find(self, root: TreeNode, item: int) -> TreeNode:
         if root is None:
             return None
@@ -229,7 +241,5 @@ if __name__ == '__main__':
     for item in range(1, 10):
         tree.insert(item)
 
-    print(tree.find(5))
-    print(tree.find(1))
-    print(tree.find(10))
-    print(tree.find(8.4))
+    for item in tree.inorder_items():
+        print(item)
