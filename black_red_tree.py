@@ -212,13 +212,7 @@ class BlackRedTree:
 if __name__ == '__main__':
     tree = BlackRedTree()
 
-    tree.insert(8)
-    tree.insert(18)
-    tree.insert(5)
-    tree.insert(15)
-    tree.insert(17)
-    tree.insert(25)
-    tree.insert(40)
-    tree.insert(80)
+    for item in range(1, 10):
+        tree.insert(item)
 
     BlackRedTree.print_tree(tree.root)
