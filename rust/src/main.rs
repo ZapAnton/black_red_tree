@@ -27,6 +27,10 @@ impl<'a> TreeNode<'a> {
             parent: None,
         }
     }
+
+    fn is_root(&self) -> bool {
+        self.parent.is_none()
+    }
 }
 
 fn main() {
@@ -67,5 +71,18 @@ mod test {
         assert_eq!(node.left_child.unwrap().item, 6);
 
         assert_eq!(node.right_child.unwrap().item, 7);
+    }
+
+    #[test]
+    fn test_is_root() {
+        let parent = TreeNode::new(5);
+
+        let mut node = TreeNode::new(4);
+
+        node.parent = Some(&parent);
+
+        assert!(!node.is_root());
+
+        assert!(node.parent.unwrap().is_root());
     }
 }
