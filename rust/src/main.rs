@@ -31,6 +31,26 @@ impl<'a> TreeNode<'a> {
     fn is_root(&self) -> bool {
         self.parent.is_none()
     }
+
+    fn get_uncle(&self) -> Option<&TreeNode> {
+        if self.parent.is_none() {
+            return None;
+        }
+
+        if let Some(grandparent) = self.parent.unwrap().parent {
+            if let Some(left_child) = grandparent.left_child {
+                if left_child.item == self.parent.unwrap().item {
+                    grandparent.left_child
+                } else {
+                    grandparent.right_child
+                }
+            } else {
+                grandparent.right_child
+            }
+        } else {
+            None
+        }
+    }
 }
 
 fn main() {
@@ -84,5 +104,20 @@ mod test {
         assert!(!node.is_root());
 
         assert!(node.parent.unwrap().is_root());
+    }
+
+    #[test]
+    fn test_uncle() {
+        let grandparent = TreeNode::new(10);
+
+        let mut parent = TreeNode::new(15);
+
+        let mut node = TreeNode::new(18);
+
+        parent.parent = Some(&grandparent);
+
+        node.parent = Some(&parent);
+
+        assert!(node.get_uncle().is_none());
     }
 }
