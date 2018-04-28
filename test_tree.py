@@ -1,6 +1,7 @@
 import unittest
 import random
 from black_red_tree import BlackRedTree
+from tree_node import NODE_TYPE
 
 
 class TestInsert(unittest.TestCase):
@@ -49,6 +50,66 @@ class FindTest(unittest.TestCase):
         self.assertEqual(tree.find(5).item, 5)
 
         self.assertIsNone(tree.find(10))
+
+
+class ColorsTest(unittest.TestCase):
+
+    def test_colors(self):
+        tree = BlackRedTree()
+
+        tree.insert(8)
+
+        self.assertEqual(tree.find(8).node_type, NODE_TYPE.BLACK)
+
+        tree.insert(18)
+
+        self.assertEqual(tree.find(8).node_type, NODE_TYPE.BLACK)
+
+        self.assertEqual(tree.find(18).node_type, NODE_TYPE.RED)
+
+        tree.insert(5)
+
+        self.assertEqual(tree.find(8).node_type, NODE_TYPE.BLACK)
+
+        self.assertEqual(tree.find(18).node_type, NODE_TYPE.RED)
+
+        self.assertEqual(tree.find(5).node_type, NODE_TYPE.RED)
+
+        tree.insert(15)
+
+        self.assertEqual(tree.find(8).node_type, NODE_TYPE.BLACK)
+
+        self.assertEqual(tree.find(18).node_type, NODE_TYPE.BLACK)
+
+        self.assertEqual(tree.find(5).node_type, NODE_TYPE.BLACK)
+
+        self.assertEqual(tree.find(15).node_type, NODE_TYPE.RED)
+
+        tree.insert(17)
+
+        self.assertEqual(tree.find(8).node_type, NODE_TYPE.BLACK)
+
+        self.assertEqual(tree.find(18).node_type, NODE_TYPE.RED)
+
+        self.assertEqual(tree.find(5).node_type, NODE_TYPE.BLACK)
+
+        self.assertEqual(tree.find(15).node_type, NODE_TYPE.RED)
+
+        self.assertEqual(tree.find(17).node_type, NODE_TYPE.BLACK)
+
+        tree.insert(25)
+
+        self.assertEqual(tree.find(8).node_type, NODE_TYPE.BLACK)
+
+        self.assertEqual(tree.find(18).node_type, NODE_TYPE.BLACK)
+
+        self.assertEqual(tree.find(5).node_type, NODE_TYPE.BLACK)
+
+        self.assertEqual(tree.find(15).node_type, NODE_TYPE.BLACK)
+
+        self.assertEqual(tree.find(17).node_type, NODE_TYPE.RED)
+
+        self.assertEqual(tree.find(25).node_type, NODE_TYPE.RED)
 
 
 if __name__ == '__main__':
