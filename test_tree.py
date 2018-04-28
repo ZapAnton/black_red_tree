@@ -36,5 +36,20 @@ class MinMaxTest(unittest.TestCase):
         self.assertEqual(tree.max(), max(input_values))
 
 
+class FindTest(unittest.TestCase):
+
+    def test_find_values(self):
+        tree = BlackRedTree()
+
+        for value in range(10):
+            tree.insert(value)
+
+        self.assertEqual(tree.find(0).item, 0)
+
+        self.assertEqual(tree.find(5).item, 5)
+
+        self.assertIsNone(tree.find(10))
+
+
 if __name__ == '__main__':
     unittest.main()
