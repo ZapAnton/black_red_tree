@@ -21,5 +21,20 @@ class TestInsert(unittest.TestCase):
             self.assertEqual(i, item)
 
 
+class MinMaxTest(unittest.TestCase):
+
+    def test_min_max(self):
+        tree = BlackRedTree()
+
+        input_values = [random.randint(-1000, 1000) for _ in range(100)]
+
+        for value in input_values:
+            tree.insert(value)
+
+        self.assertEqual(tree.min(), min(input_values))
+
+        self.assertEqual(tree.max(), max(input_values))
+
+
 if __name__ == '__main__':
     unittest.main()
