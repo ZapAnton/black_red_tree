@@ -4,8 +4,6 @@ from tree_node import TreeNode, NODE_TYPE
 class BlackRedTree:
 
     def __init__(self):
-        print('Creating black-red tree!')
-
         self.root = None
 
     def __insert_item(self, new_node: TreeNode, root: TreeNode) -> TreeNode:
