@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 typedef enum{
 	BLACK,
@@ -33,8 +34,7 @@ TreeNode* new_node(int item) {
 	return node;
 }
 
-
-int main(int argc, char** argv) {
+void test_relations() {
 	TreeNode* node = new_node(5);
 
 	TreeNode* parent = new_node(3);
@@ -49,14 +49,22 @@ int main(int argc, char** argv) {
 
 	left_child->parent = node;
 
-	printf("Node: %d, Parent: %d, Left Child: %d\n",
-			node->item, 
-			node->parent->item, 
-			node->left_child->item);
+	assert(node->item == 5);
+
+	assert(node->parent->item == 3);
+
+	assert(node->left_child->item == 4);
+
+	assert(node->right_child == NULL);
 
 	free(left_child);
 
 	free(node);
 
 	free(parent);
+}
+
+
+int main(int argc, char** argv) {
+	test_relations();
 }
