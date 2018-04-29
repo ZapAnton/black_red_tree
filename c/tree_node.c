@@ -31,12 +31,18 @@ TreeNode* new_node(int item) {
 
 	node->left_child = NULL;
 
+	node->parent = NULL;
+
 	return node;
 }
 
 void free_node(TreeNode** node) {
 	if (*node == NULL) {
 		return;
+	}
+
+	if ((*node)->parent != NULL) {
+		(*node)->parent = NULL;
 	}
 
 	free_node(&(*node)->left_child);
@@ -49,6 +55,10 @@ void free_node(TreeNode** node) {
 }
 
 void test_free_node() {
+	TreeNode* parent = new_node(3);
+
+	TreeNode* left_child = new_node(4);
+
 	TreeNode* node = new_node(5);
 
 	free_node(&node);
@@ -56,10 +66,6 @@ void test_free_node() {
 	assert(node == NULL);
 
 	node = new_node(8);
-
-	TreeNode* parent = new_node(3);
-
-	TreeNode* left_child = new_node(4);
 
 	parent->right_child = node;
 
@@ -72,8 +78,6 @@ void test_free_node() {
 	free_node(&parent);
 
 	assert(parent == NULL);
-	
-	free_node(&parent);
 }
 
 void test_relations() {
@@ -99,7 +103,7 @@ void test_relations() {
 
 	assert(node->right_child == NULL);
 
-	free_node(&parent);
+	free_node(&node);
 }
 
 
