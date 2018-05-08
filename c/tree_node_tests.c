@@ -4,6 +4,8 @@
 #include "tree_node.h"
 
 void test_free_node() {
+	printf("Testing free_node function: ");
+
 	TreeNode* parent = new_node(3);
 
 	TreeNode* left_child = new_node(4);
@@ -29,9 +31,13 @@ void test_free_node() {
 	assert(parent->right_child == NULL);
 
 	free_node(&parent);
+
+	printf("\x1b[32mOk!\x1b[0m\n");
 }
 
 void test_relations() {
+	printf("Testing node relations function: ");
+
 	TreeNode* node = new_node(5);
 
 	TreeNode* parent = new_node(3);
@@ -55,9 +61,13 @@ void test_relations() {
 	assert(node->right_child == NULL);
 
 	free_node(&node);
+
+	printf("\x1b[32mOk!\x1b[0m\n");
 }
 
 void test_get_uncle() {
+	printf("Testing get_uncle function: ");
+
 	TreeNode* node = new_node(5);
 
 	TreeNode* parent = new_node(3);
@@ -85,6 +95,8 @@ void test_get_uncle() {
 	assert(get_uncle(node) == uncle);
 
 	free_node(&grandparent);
+
+	printf("\x1b[32mOk!\x1b[0m\n");
 }
 
 void test_print_node() {
