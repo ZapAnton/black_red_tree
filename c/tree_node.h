@@ -19,3 +19,5 @@ struct TreeNode {
 TreeNode* new_node(int item);
 
 void free_node(TreeNode** node);
+
+TreeNode* get_uncle(TreeNode* node);
