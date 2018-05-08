@@ -1,5 +1,5 @@
 typedef enum{
-	BLACK,
+	BLACK=0,
 	RED,
 } NodeType;
 
@@ -23,3 +23,5 @@ void free_node(TreeNode** node);
 TreeNode* get_uncle(TreeNode* node);
 
 int is_root(TreeNode* node);
+
+void print_node(TreeNode* node);

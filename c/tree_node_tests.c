@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include "tree_node.h"
 
@@ -86,6 +87,36 @@ void test_get_uncle() {
 	free_node(&grandparent);
 }
 
+void test_print_node() {
+	TreeNode* node = new_node(5);
+
+	TreeNode* parent = new_node(2);
+
+	TreeNode* right_child = new_node(6);
+
+	parent->right_child = node;
+
+	node->parent = parent;
+
+	node->right_child = right_child;
+
+	right_child->parent = node;
+
+	puts("Testing print_node function:\n");
+
+	print_node(node);
+
+	puts("");
+
+	print_node(parent);
+
+	puts("");
+
+	print_node(right_child);
+
+	free_node(&parent);
+}
+
 
 int main(int argc, char** argv) {
 	test_relations();
@@ -93,6 +124,8 @@ int main(int argc, char** argv) {
 	test_free_node();
 
 	test_get_uncle();
+
+	test_print_node();
 
 	return 0;
 }
