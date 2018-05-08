@@ -37,21 +37,29 @@ void free_node(TreeNode** node) {
 }
 
 TreeNode* get_uncle(TreeNode* node) {
+	if (is_root(node)) {
+		return NULL;
+	}
+
 	TreeNode* parent = node->parent;
-	
-	if (parent == NULL) {
+
+	if (is_root(parent)) {
 		return NULL;
 	}
 
 	TreeNode* grandparent = parent->parent;
 
-	if (grandparent == NULL) {
-		return NULL;
-	}
-
 	if (grandparent->right_child == parent) {
 		return grandparent->left_child;
 	} else {
 		return grandparent->right_child;
+	}
+}
+
+int is_root(TreeNode* node) {
+	if (node != NULL) {
+		return node->parent == NULL;
+	} else {
+		return 0;
 	}
 }

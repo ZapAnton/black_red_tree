@@ -21,3 +21,5 @@ TreeNode* new_node(int item);
 void free_node(TreeNode** node);
 
 TreeNode* get_uncle(TreeNode* node);
+
+int is_root(TreeNode* node);
