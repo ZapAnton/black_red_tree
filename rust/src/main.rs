@@ -1,10 +1,11 @@
+use std::fmt;
+
 #[derive(Debug)]
 enum NodeType {
     BLACK,
     RED,
 }
 
-#[derive(Debug)]
 struct TreeNode {
     item: i32,
 
@@ -49,6 +50,31 @@ impl TreeNode {
             } else {
                 None
             }
+        }
+    }
+}
+
+impl fmt::Display for TreeNode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        unsafe {
+            write!(
+                f,
+                "Node: {}, Type: {:?}, Parent: {}, Left Child: {}, Right Child: {}",
+                self.item,
+                self.node_type,
+                match self.parent {
+                    Some(parent) => format!("{}", (*parent).item),
+                    None => "None".to_string(),
+                },
+                match self.left_child {
+                    Some(left_child) => format!("{}", (*left_child).item),
+                    None => "None".to_string(),
+                },
+                match self.right_child {
+                    Some(right_child) => format!("{}", (*right_child).item),
+                    None => "None".to_string(),
+                },
+            )
         }
     }
 }
@@ -145,5 +171,29 @@ mod test {
         uncle.parent = Some(&grandparent as *const TreeNode);
 
         assert!(node.get_uncle().is_some());
+    }
+
+    #[test]
+    #[ignore]
+    fn test_print() {
+        let mut node = TreeNode::new(4);
+
+        let mut parent = TreeNode::new(1);
+
+        let mut left_child = TreeNode::new(2);
+
+        println!("{}", node);
+
+        node.parent = Some(&parent as *const TreeNode);
+
+        parent.right_child = Some(&node as *const TreeNode);
+
+        println!("{}", node);
+
+        node.left_child = Some(&left_child as *const TreeNode);
+
+        left_child.parent = Some(&node as *const TreeNode);
+
+        println!("{}\n{}\n{}", node, parent, left_child);
     }
 }
