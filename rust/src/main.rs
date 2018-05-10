@@ -104,18 +104,28 @@ mod test {
         }
     }
 
-    /*#[test]
+    #[test]
     fn test_uncle() {
-        let grandparent = TreeNode::new(10);
+        let mut grandparent = TreeNode::new(10);
 
         let mut parent = TreeNode::new(15);
 
+        let mut uncle = TreeNode::new(8);
+
         let mut node = TreeNode::new(18);
 
-        parent.parent = Some(&grandparent);
+        assert!(node.get_uncle().is_none());
 
-        node.parent = Some(&parent);
+        node.parent = Some(&parent as *const TreeNode);
+
+        parent.right_child = Some(&node as *const TreeNode);
 
         assert!(node.get_uncle().is_none());
-    }*/
+
+        parent.parent = Some(&grandparent as *const TreeNode);
+
+        grandparent.right_child = Some(&parent as *const TreeNode);
+
+        assert!(node.get_uncle().is_none());
+    }
 }
