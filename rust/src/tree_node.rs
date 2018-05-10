@@ -1,25 +1,25 @@
 use std::fmt;
 
 #[derive(Debug)]
-enum NodeType {
+pub enum NodeType {
     BLACK,
     RED,
 }
 
 pub struct TreeNode {
-    item: i32,
+    pub item: i32,
 
-    node_type: NodeType,
+    pub node_type: NodeType,
 
-    left_child: Option<*const TreeNode>,
+    pub left_child: Option<*mut TreeNode>,
 
-    right_child: Option<*const TreeNode>,
+    pub right_child: Option<*mut TreeNode>,
 
-    parent: Option<*const TreeNode>,
+    pub parent: Option<*mut TreeNode>,
 }
 
 impl TreeNode {
-    fn new(item: i32) -> Self {
+    pub fn new(item: i32) -> Self {
         TreeNode {
             item,
             node_type: NodeType::RED,
@@ -33,7 +33,7 @@ impl TreeNode {
         self.parent.is_none()
     }
 
-    fn get_uncle(&self) -> Option<*const TreeNode> {
+    fn get_uncle(&self) -> Option<*mut TreeNode> {
         if self.is_root() {
             return None;
         }
@@ -96,17 +96,17 @@ mod test {
 
         let mut node = TreeNode::new(5);
 
-        node.parent = Some(&parent as *const TreeNode);
+        node.parent = Some(&mut parent as *mut TreeNode);
 
-        parent.right_child = Some(&node as *const TreeNode);
+        parent.right_child = Some(&mut node as *mut TreeNode);
 
-        node.left_child = Some(&left_child as *const TreeNode);
+        node.left_child = Some(&mut left_child as *mut TreeNode);
 
-        left_child.parent = Some(&node as *const TreeNode);
+        left_child.parent = Some(&mut node as *mut TreeNode);
 
-        node.right_child = Some(&right_child as *const TreeNode);
+        node.right_child = Some(&mut right_child as *mut TreeNode);
 
-        right_child.parent = Some(&node as *const TreeNode);
+        right_child.parent = Some(&mut node as *mut TreeNode);
 
         unsafe {
             assert_eq!(node.item, 5);
@@ -127,11 +127,11 @@ mod test {
 
     #[test]
     fn test_is_root() {
-        let parent = TreeNode::new(5);
+        let mut parent = TreeNode::new(5);
 
         let mut node = TreeNode::new(4);
 
-        node.parent = Some(&parent as *const TreeNode);
+        node.parent = Some(&mut parent as *mut TreeNode);
 
         assert!(!node.is_root());
 
@@ -152,21 +152,21 @@ mod test {
 
         assert!(node.get_uncle().is_none());
 
-        node.parent = Some(&parent as *const TreeNode);
+        node.parent = Some(&mut parent as *mut TreeNode);
 
-        parent.right_child = Some(&node as *const TreeNode);
-
-        assert!(node.get_uncle().is_none());
-
-        parent.parent = Some(&grandparent as *const TreeNode);
-
-        grandparent.right_child = Some(&parent as *const TreeNode);
+        parent.right_child = Some(&mut node as *mut TreeNode);
 
         assert!(node.get_uncle().is_none());
 
-        grandparent.left_child = Some(&uncle as *const TreeNode);
+        parent.parent = Some(&mut grandparent as *mut TreeNode);
 
-        uncle.parent = Some(&grandparent as *const TreeNode);
+        grandparent.right_child = Some(&mut parent as *mut TreeNode);
+
+        assert!(node.get_uncle().is_none());
+
+        grandparent.left_child = Some(&mut uncle as *mut TreeNode);
+
+        uncle.parent = Some(&mut grandparent as *mut TreeNode);
 
         assert!(node.get_uncle().is_some());
     }
@@ -182,15 +182,15 @@ mod test {
 
         println!("{}", node);
 
-        node.parent = Some(&parent as *const TreeNode);
+        node.parent = Some(&mut parent as *mut TreeNode);
 
-        parent.right_child = Some(&node as *const TreeNode);
+        parent.right_child = Some(&mut node as *mut TreeNode);
 
         println!("{}", node);
 
-        node.left_child = Some(&left_child as *const TreeNode);
+        node.left_child = Some(&mut left_child as *mut TreeNode);
 
-        left_child.parent = Some(&node as *const TreeNode);
+        left_child.parent = Some(&mut node as *mut TreeNode);
 
         println!("{}\n{}\n{}", node, parent, left_child);
     }
