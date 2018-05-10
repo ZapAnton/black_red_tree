@@ -60,32 +60,46 @@ mod test {
 
     use super::*;
 
-    /*#[test]
+    #[test]
     fn test_node_relations() {
         let mut parent = TreeNode::new(4);
 
         parent.node_type = NodeType::BLACK;
 
-        let lc = TreeNode::new(6);
+        let mut left_child = TreeNode::new(6);
 
-        let rc = TreeNode::new(7);
+        let mut right_child = TreeNode::new(7);
 
         let mut node = TreeNode::new(5);
 
-        node.parent = Some(&parent);
+        node.parent = Some(&parent as *const TreeNode);
 
-        node.left_child = Some(&lc);
+        parent.right_child = Some(&node as *const TreeNode);
 
-        node.right_child = Some(&rc);
+        node.left_child = Some(&left_child as *const TreeNode);
 
-        assert_eq!(node.item, 5);
+        left_child.parent = Some(&node as *const TreeNode);
 
-        assert_eq!(node.parent.unwrap().item, 4);
+        node.right_child = Some(&right_child as *const TreeNode);
 
-        assert_eq!(node.left_child.unwrap().item, 6);
+        right_child.parent = Some(&node as *const TreeNode);
 
-        assert_eq!(node.right_child.unwrap().item, 7);
-    }*/
+        unsafe {
+            assert_eq!(node.item, 5);
+
+            assert_eq!((*node.parent.unwrap()).item, 4);
+
+            assert_eq!((*parent.right_child.unwrap()).item, 5);
+
+            assert_eq!((*node.left_child.unwrap()).item, 6);
+
+            assert_eq!((*left_child.parent.unwrap()).item, 5);
+
+            assert_eq!((*node.right_child.unwrap()).item, 7);
+
+            assert_eq!((*right_child.parent.unwrap()).item, 5);
+        }
+    }
 
     #[test]
     fn test_is_root() {
