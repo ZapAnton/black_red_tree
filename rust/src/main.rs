@@ -38,15 +38,13 @@ impl TreeNode {
         }
 
         unsafe {
-            if let Some(grandparent) = (*self.parent.unwrap()).parent {
-                if let Some(left_child) = (*grandparent).left_child {
-                    if (*left_child).item == (*self.parent.unwrap()).item {
-                        (*grandparent).left_child
-                    } else {
-                        (*grandparent).right_child
-                    }
-                } else {
+            let parent = self.parent;
+
+            if let Some(grandparent) = (*parent.unwrap()).parent {
+                if (*grandparent).left_child == parent {
                     (*grandparent).right_child
+                } else {
+                    (*grandparent).left_child
                 }
             } else {
                 None
@@ -127,5 +125,11 @@ mod test {
         grandparent.right_child = Some(&parent as *const TreeNode);
 
         assert!(node.get_uncle().is_none());
+
+        grandparent.left_child = Some(&uncle as *const TreeNode);
+
+        uncle.parent = Some(&grandparent as *const TreeNode);
+
+        assert!(node.get_uncle().is_some());
     }
 }
