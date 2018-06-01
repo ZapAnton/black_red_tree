@@ -2,5 +2,9 @@
 
 typedef struct RedBlackTree RedBlackTree;
 struct RedBlackTree {
-	TreeNode* root = NULL;
-}
+	TreeNode* root;
+};
+
+void insert(RedBlackTree* tree, int item);
+
+TreeNode* insert_node(TreeNode* new_node, TreeNode* root_node);

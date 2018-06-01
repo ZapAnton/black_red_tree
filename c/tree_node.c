@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "tree_node.h"
 
-TreeNode* new_node(int item) {
+TreeNode* construct_node(int item) {
 	TreeNode* node = malloc(sizeof(TreeNode));
 
 	node->item = item;

@@ -16,7 +16,7 @@ struct TreeNode {
 	TreeNode* parent;
 };
 
-TreeNode* new_node(int item);
+TreeNode* construct_node(int item);
 
 void free_node(TreeNode** node);
 
