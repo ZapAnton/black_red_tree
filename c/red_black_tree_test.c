@@ -7,4 +7,7 @@ int main(int argc, char** argv) {
 	tree.root = NULL;
 
 	insert(&tree, 5);
+	insert(&tree, 1);
+	insert(&tree, 3);
+	insert(&tree, 8);
 }
