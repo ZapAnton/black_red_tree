@@ -22,3 +22,15 @@ void insert(RedBlackTree* tree, int item) {
 
 	tree->root = insert_node(new_node, tree->root);
 }
+
+void print_tree(TreeNode* root_node) {
+	if (root_node == NULL) {
+		return;
+	}
+
+	print_tree(root_node->left_child);
+
+	print_node(root_node);
+
+	print_tree(root_node->right_child);
+}

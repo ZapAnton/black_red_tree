@@ -93,7 +93,7 @@ void print_node(TreeNode* node) {
 		sprintf(right_item_buff, "%d", node->right_child->item);
 	}
 
-	printf("Node: %d, Color: %s, Parent: %s, Left child: %s, Right child: %s",
+	printf("Node: %d, Color: %s, Parent: %s, Left child: %s, Right child: %s\n",
 			node->item,
 			node->node_type == BLACK ? "BLACK" : "RED",
 			parent_item_buff,

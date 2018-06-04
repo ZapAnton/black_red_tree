@@ -7,4 +7,6 @@ struct RedBlackTree {
 
 void insert(RedBlackTree* tree, int item);
 
+void print_tree(TreeNode* tree);
+
 TreeNode* insert_node(TreeNode* new_node, TreeNode* root_node);

@@ -10,4 +10,6 @@ int main(int argc, char** argv) {
 	insert(&tree, 1);
 	insert(&tree, 3);
 	insert(&tree, 8);
+
+	print_tree(tree.root);
 }
